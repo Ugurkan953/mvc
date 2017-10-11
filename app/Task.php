@@ -13,7 +13,10 @@ class Task extends Model
 
 	public function addComment($body){
 
-		$this->comments()->create(compact('body'));
+		$this->comments()->create([
+			'body' => request('body'),
+            'user_id' => auth()->id()
+		]);
 
 	}
 

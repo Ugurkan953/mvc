@@ -8,6 +8,13 @@ use App\Task;
 
 class TasksController extends Controller
 {
+    public function __construct(){
+
+        $this->middleware('auth')->except(['index', 'show']);
+
+    }
+
+
     public function index() 
     {
 	    $tasks = Task::latest()->get();
@@ -38,12 +45,11 @@ class TasksController extends Controller
     		'body' => 'required'
     	]);
 
-    	Task::create(
-    		request([
-    			'title', 
-    			'body'
-    		])
-    	);
+    	Task::create([
+			'title' => request('title'), 
+			'body' => request('body'),
+            'user_id' => auth()->id()
+    	]);
 
     	return redirect('/tasks');
     }
