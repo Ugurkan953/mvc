@@ -56,9 +56,24 @@
                                         <a href="{{ url('/tasks/') }}">
                                             Games
                                         </a>
+                                    </li>
+                                    <li>
                                         <a href="{{ url('/create/') }}">
                                             Create new game
                                         </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/profile/') }}">
+                                            My profile
+                                        </a>
+                                    </li>
+                                    @if(Auth::user()->role == '1')
+                                    <li>
+                                        <a href="{{ url('/users/') }}">
+                                            All users
+                                        </a>
+                                    </li>
+                                    @endif
                                     </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
@@ -81,7 +96,6 @@
 
         @yield('content')
 
-        @yield('contentLoggedIn')
     </div>
 
     <!-- Scripts -->
