@@ -73,14 +73,12 @@ class UsersController extends Controller
 
     public function delete(Request $request, $id)
     {
-    	
     	if(User::find($id)){
     		$user = User::find($id);
     		$user->posts()->delete();
     		$user->delete();
 
     		return redirect('/users');
-    	}
- 		   	
+    	}	   	
     }
 }

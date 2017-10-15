@@ -21,8 +21,9 @@ Route::post('/tasks/{task}/comments', 'CommentsController@store');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile', 'UsersController@showEdit')->middleware('auth');
-Route::patch('/profile/{user}', 'UsersController@update')->middleware('auth');
-
-
 Route::get('/users', 'UsersController@show')->middleware('auth');
+
+
+Route::patch('/profile/{user}', 'UsersController@update')->middleware('auth');
 Route::delete('/users/delete/{user}', 'UsersController@delete')->middleware('auth');
+Route::delete('/tasks/delete/{task}', 'TasksController@delete')->middleware('auth');

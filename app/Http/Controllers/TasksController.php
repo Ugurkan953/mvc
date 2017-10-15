@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Task;
+use \Auth;
 
 class TasksController extends Controller
 {
-    public function __construct(){
-
+    public function __construct()
+    {
         $this->middleware('auth')->except(['index', 'show']);
-
     }
 
 
@@ -25,9 +25,7 @@ class TasksController extends Controller
 
     public function show(Task $task)
     {
-
 		return view('tasks.show', compact('task'));
-
     }
 
 
@@ -39,7 +37,6 @@ class TasksController extends Controller
 
     public function store()
     {
-    
     	$this->validate(request(), [
     		'title' => 'required',
     		'body' => 'required'
@@ -52,5 +49,24 @@ class TasksController extends Controller
     	]);
 
     	return redirect('/tasks');
+    }
+
+    public function delete(Request $request, $id)
+    {
+        if(Task::find($id)){
+            $user = Auth::user()->id;
+            
+            
+            try{
+                $task = Task::whereIdAndUser_id($id, $user)->firstOrFail();
+                $task->delete();                    
+
+                flash('Task has been deleted')->success();
+                return redirect('/tasks')->with('status', 'Deleted successfully');
+            }catch(\Exception $e){
+                
+                return redirect('/tasks')->withErrors(['You are not the owner of this message']);
+            }
+        }
     }
 }
