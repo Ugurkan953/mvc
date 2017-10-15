@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Task;
+use App\User;
 use \Auth;
 
 class TasksController extends Controller
@@ -56,9 +57,17 @@ class TasksController extends Controller
         if(Task::find($id)){
             $user = Auth::user()->id;
             
+            $oUser = User::find($user)->role;
+
             
+
             try{
-                $task = Task::whereIdAndUser_id($id, $user)->firstOrFail();
+                if($oUser == 1){
+                    $task = Task::findOrFail($id);
+                }else{
+                    $task = Task::whereIdAndUser_id($id, $user)->firstOrFail();
+                }
+                $task->comments()->delete();
                 $task->delete();                    
 
                 flash('Task has been deleted')->success();
