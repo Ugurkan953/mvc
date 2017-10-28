@@ -24,25 +24,25 @@
 						</ul>
 					</div>
 					@endif
-	                <ul>
+					Select genre to filter
+					<ul class="filter">
+						@foreach ($tasks as $task)
+						<li>
+							<a href="/tasks/filter/{{ $task->genre }}"> 
+								{{ $task->genre }}
+							</a>
+						</li>
+						@endforeach
+					</ul>
+				</div>
+				<div class="panel-body">
+					Select game
+	                <ul id="tasks">
 				        @foreach ($tasks as $task)
 				            <li>
-				            	@guest
 				            	<a href="tasks/{{ $task->id }}"> 
-				            		{{ $task->title }}
+				            		{{ $task->title }} | {{ $task->genre }}
 				            	</a>
-				            	@else
-					            	@if(Auth::user())
-						            	<form action="/tasks/delete/{{$task->id}}" method="POST">
-								        	{{csrf_field()}}
-								        	{{ method_field('DELETE') }}
-								        	<a href="tasks/{{ $task->id }}"> 
-							            		{{ $task->title }}
-							            	</a>
-								        	<button type="submit" class="btn btn-default deletebutton">Delete</button>
-								        </form>
-							        @endif
-						        @endguest
 				            </li>
 				        @endforeach
 				    </ul>
@@ -51,5 +51,4 @@
 	    </div>
 	</div>
 </div>
-
 @endsection

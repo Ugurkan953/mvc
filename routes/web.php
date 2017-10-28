@@ -14,6 +14,7 @@ Route::get('/', 'TasksController@index');
 Route::get('/tasks', 'TasksController@index');
 Route::get('/create', 'TasksController@create');
 Route::get('/tasks/{task}', 'TasksController@show');
+Route::get('/tasks/filter/{task}', 'TasksController@filter');
 
 Route::post('/tasks', 'TasksController@store');
 Route::post('/tasks/{task}/comments', 'CommentsController@store');

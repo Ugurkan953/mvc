@@ -18,6 +18,15 @@
 							<input type="text" name="title" id="title" placeholder="title"   class="form-control" required>
 						</div>
 						<div class="form-group">
+				            <label for="Genre">Genre:</label>
+							<select name="genre" id="genre" class="form-control">
+								<option value="action">Action</option>
+								<option value="rpg">RPG</option>
+								<option value="fps">FPS</option>
+								<option value="race">Race</option>
+							</select>
+						</div>
+						<div class="form-group">
 				            <label for="title">Title:</label>
 							<textarea id="body" name="body" placeholder="body text" class="form-control" required></textarea>
 						</div>

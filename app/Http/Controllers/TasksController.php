@@ -24,11 +24,22 @@ class TasksController extends Controller
     }
 
 
-    public function show(Task $task)
+    public function show(Task $task, User $user)
     {
-		return view('tasks.show', compact('task'));
+		return view('tasks.show', compact('task', 'user'));
     }
 
+    public function filter($task){
+
+        
+        $data['task'] = $task;
+        
+        $fTasks = Task::where('genre' ,'=', $data )->get();      
+        $tasks = Task::latest()->get();  
+        
+        return view('tasks.filter', compact('fTasks', 'tasks'));
+
+    }
 
     public function create()
     {
@@ -40,11 +51,13 @@ class TasksController extends Controller
     {
     	$this->validate(request(), [
     		'title' => 'required',
+            'genre' => 'required',
     		'body' => 'required'
     	]);
 
     	Task::create([
 			'title' => request('title'), 
+            'genre' => request('genre'), 
 			'body' => request('body'),
             'user_id' => auth()->id()
     	]);
@@ -58,8 +71,6 @@ class TasksController extends Controller
             $user = Auth::user()->id;
             
             $oUser = User::find($user)->role;
-
-            
 
             try{
                 if($oUser == 1){
